@@ -8,7 +8,7 @@
 
 window#waybar {
     background: rgb(24, 26, 34);
-    border-bottom: 2px solid #ffda7c;
+    border-bottom: 2px solid #8aadf4;
     color: white;
 }
 
@@ -21,26 +21,25 @@ tooltip label {
 }
 
 #pulseaudio, #cpu, #memory, #temperature, #battery, #network, #tray, #clock {
-    border: 2px solid #ffda7c;
-    padding: 7px;
-    margin: 6px;
-    color: #ffda7c;
+    padding: 4px;
+    margin: 2px;
+    color: #8aadf4;
 }
 
 #workspaces button {
     padding: 0 5px;
     background: transparent;
-    color: #ffda7c;
+    color: #8aadf4;
 }
 
 @keyframes blink {
     to {
-        color: #dc5e5e;
+        color: #ed8796;
     }
 }
 
 #workspaces button.urgent {
-    color: #ffda7c;
+    color: #8aadf4;
     animation-name: blink;
     animation-duration: 0.5s;
     animation-timing-function: steps(12);
@@ -49,20 +48,21 @@ tooltip label {
 }
 
 #battery.charging {
-    color: #729f85;
-    border-color: #729f85;
+    color: #a6da95;
+}
+
+#battery.warning:not(.charging) {
+    color: #eed49f
 }
 
 @keyframes blink {
     to {
-        color: #dc5e5e;
-        border-color: #dc5e5e;
+        color: #ed8796;
     }
 }
 
-#battery.warning:not(.charging) {
-    color: #ffda7c;
-    border-color: #ffda7c;
+#battery.critical:not(.charging) {
+    color: #eed49f;
     animation-name: blink;
     animation-duration: 0.5s;
     animation-timing-function: steps(12);

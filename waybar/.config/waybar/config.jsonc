@@ -2,7 +2,7 @@
 {
     // "layer": "top", // Waybar at top layer
     // "position": "bottom", // Waybar position (top|bottom|left|right)
-    "height": 47, // Waybar height (to be removed for auto height)
+    "height": 29, // Waybar height (to be removed for auto height)
     // "width": 1280, // Waybar width
     "spacing": 8, // Gaps between modules (4px)
     // Choose the order of the modules
@@ -65,8 +65,8 @@
     "battery": {
         "states": {
             // "good": 95,
-            "warning": 20
-            // "critical": 10
+            "warning": 25,
+            "critical": 15
         },
         "format": "{icon} {capacity}%",
         //"format-full": "{icon} {capacity}%",
