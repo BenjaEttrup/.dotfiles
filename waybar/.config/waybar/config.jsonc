@@ -2,34 +2,36 @@
 {
     // "layer": "top", // Waybar at top layer
     // "position": "bottom", // Waybar position (top|bottom|left|right)
-    "height": 29, // Waybar height (to be removed for auto height)
+    "height": 38, // Waybar height (to be removed for auto height)
     // "width": 1280, // Waybar width
-    "spacing": 8, // Gaps between modules (4px)
+    "spacing": 4, // Gaps between modules (4px)
     // Choose the order of the modules
     "modules-left": [
         "clock",
         "network",
         "cpu",
         "memory",
-        "temperature"
+        //"temperature",
+        "pulseaudio",
+        "pulseaudio/slider"
     ],
     "modules-center": [
         "hyprland/workspaces"
     ],
     "modules-right": [
-        "pulseaudio",
+        "tray",
         "battery",
-        "tray"
+        "custom/swaync"
     ],
     // Modules configuration
     "hyprland/workspaces": {
         "active-only": false,
         // "all-outputs": false,
-        "format": "{name}: {icon}",
+        "format": "{name}",
         "format-icons": {
-            "urgent": "▒",
-            "active": "█",
-            "default": "▒"
+            "urgent": "",
+            "active": "",
+            "default": ""
         }
     },
     "tray": {
@@ -49,8 +51,9 @@
         "format": "{}% "
     },
     "temperature": {
-        // "thermal-zone": 2,
-        // "hwmon-path": "/sys/class/hwmon/hwmon2/temp1_input",
+        "interval": 10,
+        //"thermal-zone": 2,
+        "hwmon-path": "/sys/class/hwmon/hwmon2/temp1_input",
         "critical-threshold": 80,
         // "format-critical": "{temperatureC}°C {icon}",
         "format": "{temperatureC}°C {icon}",
@@ -78,10 +81,12 @@
         "format-icons": [" [ ▒▒▒▒▒▒▒▒ ]", " [ █▒▒▒▒▒▒▒ ]", " [ ██▒▒▒▒▒▒ ]", " [ ███▒▒▒▒▒ ]", " [ ████▒▒▒▒ ]", " [ █████▒▒▒ ]", " [ ██████▒▒ ]", " [ ███████▒ ]", " [ ████████ ]"]
     },
     "network": {
+        "interval": 1,
+        "tooltip": true,
         //"interface": "wlp2*", // (Optional) To force the use of this interface
         "format-wifi": "{signalStrength}%  ",
-        "format-ethernet": "{ipaddr}/{cidr} ",
-        "tooltip-format": "{essid}",
+        "format-ethernet": "󰈀",
+        "tooltip-format": "{bandwidthDownBytes} {bandwidthUpBytes}",
         "format-linked": "{ifname} (No IP) ",
         "format-disconnected": "Disconnected ⚠",
         "on-click": "kitty -e 'nmtui'"
@@ -89,16 +94,41 @@
     },
     "pulseaudio": {
         // "scroll-step": 1, // %, can be a float
-        "format": "{icon} {volume}%",
+        "format": "{format_source} {icon} ",
         "format-bluetooth": "{volume}% {icon} {format_source}",
-        "format-bluetooth-muted": " {icon} {format_source}",
-        "format-muted": "",
-        "format-source": "",
+        "format-bluetooth-muted": " {icon} {format_source}",
+        "format-muted": "{format_source}  ",
+        "format-source": "",
         "format-source-muted": "",
         "format-icons": {
             "headphone": "",
-            "default": [" [ ▒▒▒▒▒▒▒▒ ]", " [ █▒▒▒▒▒▒▒ ]", " [ ██▒▒▒▒▒▒ ]", " [ ███▒▒▒▒▒ ]", " [ ████▒▒▒▒ ]", " [ █████▒▒▒ ]", " [ ██████▒▒ ]", " [ ███████▒ ]", " [ ████████ ]"]
+            "default": ["", "", "", "", "", "", "", "", ""]
         },
-        "on-click": "pavucontrol"
+        "on-click": "pwvucontrol"
+    },
+    "pulseaudio/slider": {
+        "min": 0,
+        "max": 100,
+        "orientation": "horizontal"
+    },
+    "custom/swaync": {
+        "tooltip":true,     
+        "format": "{icon}",
+        "format-icons": {
+            "notification": "󱅫",
+            "none": "󰂚",
+            "dnd-notification": "󰂛",
+            "dnd-none": "󰂛",
+            "inhibited-notification": "󱅫",
+            "inhibited-none": "󰂚",
+            "dnd-inhibited-notification": "󰂛",
+            "dnd-inhibited-none": "󰂛"
+        },
+        "return-type": "json",
+        "exec-if": "which swaync-client",
+        "exec": "swaync-client -swb",
+        "on-click": "sleep 0.1 && swaync-client -t -sw",
+        "on-click-right": "swaync-client -d -sw",
+        "escape": true
     }
 }
